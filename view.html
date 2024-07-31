@@ -1,54 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cache Simulation Input</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
 </head>
 
-
 <body>
-    
-    <label for="block_size">Block Size:</label>
-    <input type="text" id="block_size_value" name="block_size_value"><br>
-
-    <label for="set_size">Set Size:</label>
-    <input type="text" id="set_size_value" name="set_size_value"><br>
-
-    <label for="block_sequence">Block Sequence:</label>
-    <input type="text" id="block_sequence_value" name="block_sequence_value"><br>
-
-    <label for="mm_memory_size">MM Memory Size: IDK WHAT THIS IS FOR</label>
-    <input type="text" id="mm_memory_size_value" name="mm_memory_size_value">
-    <select id="mm_memory_size" name="mm_memory_size_select">
-        <option value="blocks">Blocks</option>
-        <option value="words">Words</option>
-    </select>
-
-    <br>
-
-    <label for="cache_memory_size">Cache Memory Size: SO IS THIS</label>
-    <input type="text" id="cache_memory_size_value" name="cache_memory_size_value">
-    <select id="cache_memory_size" name="cache_memory_size_select">
-        <option value="blocks">Blocks</option>
-        <option value="words">Words</option>
-    </select>
-
-    <br>
-
-    <label for="program_flow">Program Flow to be Simulated: AND THIS?</label>
-    <input type="text" id="program_flow_value" name="program_flow_value">
-    <select id="program_flow" name="program_flow_select">
-        <option value="blocks">Blocks</option>
-        <option value="words">Words</option>
-    </select>
-
-
-    <div id="array_output"> <h1> PRINT arr here </h1></div>
-
-
-    
+	<select id="option">
+		<option value="block">Blocks</option>
+		<option value="word">Words</option>
+	</select>
+	<br>
+	<label>Block Size</label>
+	<input type="text" id="blocksize"></input>
+	<br>
+	<label>Set Size</label>
+	<input type="text" id="setsize"></input>
+	<br>
+	<label>Main Memory Size</label>
+	<input type="text" id="memsize"></input>
+	<br>
+	<label>Cache Memory Size</label>	
+	<input type="text" id="cmemsize"></input>
+	<br>
+	<label>Cache Cycle Time (in ns)</label>
+	<input type="text" id="ccycle"></input>
+	<br>
+	<label>Memory Cycle Time (in ns)</label>
+	<input type="text" id="mcycle"></input>
+	<br>
+	<label>Program Flow</label>
+	<input type="text" id="flow"></input>
+	<br>
+	
+	<input type="button" id="submit" value="Submit" onclick="submit()"></input>
+	<br><br>
+	
+	<label>Cache Hits</label>
+	<input type="text" id="hits" readonly></input>
+	<br>
+	<label>Cache Misses</label>
+	<input type="text" id="misses" readonly></input>
+	<br>
+	<label>Miss Penalty</label>
+	<input type="text" id="penalty" readonly></input>
+	<br>
+	<label>Average Memory Access Time</label>
+	<input type="text" id="average" readonly></input>
+	<br>
+	<label>Total Memory Access Time</label>
+	<input type="text" id="total" readonly></input>
+	<br>
+	<label>Snapshot</label>
+	<textarea id="snapshot" readonly></textarea>
+	<br>
 </body>
+
 </html>
