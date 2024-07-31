@@ -10,7 +10,11 @@
 
 
 <body>
-    
+    <select id="block_size" name="block_size_select">
+        <option value="blocks">Blocks</option>
+        <option value="words">Words</option>
+    </select>
+    <br>
     <label for="cache_block_size">Cache blocks: </label>
     <input type="text" id="cache_block_size_value" name="cache_block_size_value" disabled><br>
 
@@ -19,10 +23,7 @@
 
     <label for="block_size">Block Size: </label>
     <input type="text" id="block_size_value" name="block_size_value" disabled>
-    <select id="block_size" name="block_size_select">
-        <option value="blocks">Blocks</option>
-        <option value="words">Words</option>
-    </select>
+
     <br>
     <label for="block_sequence">Cache Access Time (ns):</label>
     <input type="text" id="cache_time_value" name="cache_time_value" disabled><br>

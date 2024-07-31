@@ -74,19 +74,33 @@ $(document).ready(function() {
         event.preventDefault(); // Prevent invalid key press
     });
 
+    $("#block_size").change(function() {
+        doCalculation();
+    });
+
     // Do calculation here
     function doCalculation() {
         console.log(block_size_value);
         console.log(set_size_value);
         console.log(block_sequence_array);
-
-        if(set_size_value && block_size_value % set_size_value != 0 ){
+        let choice = $("#block_size").val();
+        
+        
+        if(choice === "blocks" && set_size_value && block_size_value % set_size_value != 0 ){
             $("label[for='cache_block_size']").html("Cache blocks: - This must be divisible by set size");
-        } else{
+        } else if( choice === "words" && set_size_value && block_size_value % (set_size_value * cm_size_value)){
+            $("label[for='cache_block_size']").html("Cache blocks: - This must be divisible by set size");
+        } 
+        else{
             $("label[for='cache_block_size']").html("Cache blocks:");
             if (!isNaN(block_size_value) && !isNaN(set_size_value) && Array.isArray(block_sequence_array)) {
-            
-                const nRows = block_size_value / set_size_value;
+                let nRows;
+                if (choice === 'blocks'){
+                    nRows = block_size_value / set_size_value;
+                } else{
+                    nRows = block_size_value / (set_size_value*cm_size_value);
+                }
+                
                 const nCols = set_size_value;
                 let nHits = 0;
                 let nMiss = 0;
