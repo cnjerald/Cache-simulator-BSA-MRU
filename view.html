@@ -53,10 +53,24 @@
 	<br>
 	<label>Total Memory Access Time</label>
 	<input type="text" id="total" readonly></input>
+
 	<br>
-	<label>Snapshot</label>
-	<textarea id="snapshot" readonly></textarea>
-	<br>
+
+	<table id="snapshotTable" border="1">
+		<thead>
+			<tr>
+				<th>Set</th>
+				<th>Block</th>
+				<th>Value</th>
+			</tr>
+		</thead>
+		<tbody id="snapshotBody">
+			<!-- Table rows will be dynamically added here -->
+		</tbody>
+	</table>
+
+	<button id="getOutput">getOutput</button>
+
 </body>
 
 </html>

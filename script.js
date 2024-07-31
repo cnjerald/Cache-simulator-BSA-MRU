@@ -135,29 +135,81 @@ function submit()
 	document.getElementById("penalty").value = penalty
 	document.getElementById("average").value = (hitcount / flow.length) * ccycle + (misscount / flow.length) * penalty
 	document.getElementById("total").value = hitcount * 2 * ccycle + misscount * 2 * (ccycle + mcycle)	+ misscount * ccycle
-	let snapstring = ""
-	if(option.valueOf() == "block".valueOf())
-	{
-		let setmultiplier = 1
-		for(let i = 0; i < cache.length; i++)
-		{
-			if(i == setmultiplier * setsize)
-				setmultiplier += 1
-			snapstring += "set " + (setmultiplier - 1).toString() + " block " + (i % setsize).toString() + ": " + cache[i].toString() + "\n"  
+	const snapshotBody = document.getElementById("snapshotBody");
+    snapshotBody.innerHTML = ""; // Clear previous rows
+
+    if (option.valueOf() == "block".valueOf()) {
+        let setmultiplier = 1;
+        for (let i = 0; i < cache.length; i++) {
+            if (i == setmultiplier * setsize) {
+                setmultiplier += 1;
+            }
+            // Create a new row for the table
+            const row = snapshotBody.insertRow();
+            row.insertCell(0).innerText = (setmultiplier - 1).toString(); // Set
+            row.insertCell(1).innerText = (i % setsize).toString();       // Block
+            row.insertCell(2).innerText = cache[i].toString();            // Value
+        }
+    } else {
+        let setmultiplier = 1;
+        let blockmultiplier = 1;
+        for (let i = 0; i < cache.length; i++) {
+            if (i == setmultiplier * setsize * blocksize) {
+                setmultiplier += 1;
+            }
+            if (i == blockmultiplier * blocksize) {
+                blockmultiplier += 1;
+            }
+            // Create a new row for the table
+            const row = snapshotBody.insertRow();
+            row.insertCell(0).innerText = (setmultiplier - 1).toString();      // Set
+            row.insertCell(1).innerText = (blockmultiplier - 1).toString();    // Block
+            row.insertCell(2).innerText = cache[i].toString();                 // Value
+        }
+    }
+	$('#getOutput').off('click').on('click', function() {
+		// Prepare snapshot text output
+		let snapshotText = "Set\tBlock\tValue\n"; // Header for the text file
+	
+		if (option.valueOf() == "block".valueOf()) {
+			let setmultiplier = 1;
+			for (let i = 0; i < cache.length; i++) {
+				if (i == setmultiplier * setsize) {
+					setmultiplier += 1;
+				}
+				// Append to text output
+				snapshotText += `${setmultiplier - 1}\t${i % setsize}\t${cache[i]}\n`;
+			}
+		} else {
+			let setmultiplier = 1;
+			let blockmultiplier = 1;
+			for (let i = 0; i < cache.length; i++) {
+				if (i == setmultiplier * setsize * blocksize) {
+					setmultiplier += 1;
+				}
+				if (i == blockmultiplier * blocksize) {
+					blockmultiplier += 1;
+				}
+				// Append to text output
+				snapshotText += `${setmultiplier - 1}\t${blockmultiplier - 1}\t${cache[i]}\n`;
+			}
 		}
-	}
-	else
-	{
-		let setmultiplier = 1
-		let blockmultiplier = 1
-		for(let i = 0; i < cache.length; i++)
-		{
-			if(i == setmultiplier * setsize * blocksize)
-				setmultiplier += 1
-			if(i == blockmultiplier * blocksize)
-				blockmultiplier += 1
-			snapstring += "set " + (setmultiplier - 1).toString() + " block " + (blockmultiplier - 1).toString() + " word " + (i % blocksize).toString() + ": " + cache[i].toString() + "\n"  
-		}
-	}
-	document.getElementById("snapshot").value = snapstring
+	
+		// Append hitcount and misscount to snapshot text
+		snapshotText += `\nHitcount: ${hitcount}\nMisscount: ${misscount}\nMiss Penalty: ${penalty}\nAverage Mem Access: ${(hitcount / flow.length) * ccycle + (misscount / flow.length) * penalty}\nTotal Mem Access: ${hitcount * 2 * ccycle + misscount * 2 * (ccycle + mcycle) + misscount * ccycle}\n`;
+	
+		// Create a blob for the text file output
+		const blob = new Blob([snapshotText], { type: 'text/plain' });
+		const url = URL.createObjectURL(blob);
+	
+		// Create a temporary link to download the file
+		const a = document.createElement('a');
+		a.href = url;
+		a.download = 'cache_snapshot.txt'; // Specify the filename
+		document.body.appendChild(a);
+		a.click();
+		document.body.removeChild(a);
+		URL.revokeObjectURL(url); // Clean up the URL object
+	});
+
 }
